@@ -1,6 +1,6 @@
 const Usage = require("../../../models/TMF635_Usage");
 
-const createBBUsageRequest = async (payload, baseUrl) => {
+const createBBUsageRequest = async (payload) => {
   const { subscriberID, accountNo, serviceNo, usageCharacteristic } = payload;
 
   if (!subscriberID) {
@@ -16,12 +16,13 @@ const createBBUsageRequest = async (payload, baseUrl) => {
   if (accountNo) characteristics.push({ name: "accountNo", value: accountNo });
   if (serviceNo) characteristics.push({ name: "serviceNo", value: serviceNo });
 
-  const usage = await Usage.create({
+  await Usage.create({
     relatedParty: [{ id: subscriberID, role: "Subscriber" }],
     usageCharacteristic: characteristics
   });
 
-  return usage.toTMF(baseUrl);
+  // Nothing else to return — the documented response only confirms success
+  return true;
 };
 
 module.exports = { createBBUsageRequest };
