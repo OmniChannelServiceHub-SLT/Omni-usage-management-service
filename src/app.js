@@ -4,6 +4,8 @@ const express = require("express");
 
 const bbUsageRequestRoutes = require("./APIs/createBBUsageRequest/routes/bbUsageRequestRoutes");
 const extraGBRoutes = require("./APIs/createExtraGB/routes/extraGBRoutes");
+const usageSummaryRoutes = require("./APIs/createUsageSummary/routes/usageSummaryRoutes");
+
 
 const app = express();
 
@@ -16,6 +18,6 @@ app.get("/health", (req, res) => {
 
 app.use("/tmf-api/usageManagement/v4/usage", bbUsageRequestRoutes);
 app.use("/tmf-api/usageManagement/v4/extragb", extraGBRoutes);
-
+app.use("/tmf-api/usageManagement/v4/usagesummary", usageSummaryRoutes);
 
 module.exports = app;
