@@ -1,4 +1,4 @@
-const Usage = require("../../../models/TMF635_Usage");
+const Usage = require("../../../models/TMF635_UsageManagement");
 
 const createBBUsageRequest = async (payload) => {
   const { subscriberID, accountNo, serviceNo, usageCharacteristic } = payload;
