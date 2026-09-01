@@ -6,9 +6,6 @@ const connectDB = async () => {
   if (!uri) {
     throw new Error("MONGODB_URI is not set in .env");
   }
-
-  await mongoose.connect(uri);
-  console.log("Usage Management Service connected to MongoDB");
-};
+}
 
 module.exports = connectDB;

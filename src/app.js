@@ -1,4 +1,5 @@
-const express = require("express");
+const express = require('express');
+const cors = require('cors');
 
 
 
@@ -9,11 +10,11 @@ const usageSummaryRoutes = require("./APIs/createUsageSummary/routes/usageSummar
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
+app.use(requestLogger);
 
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "UP", service: "usage-management-service" });
-});
+app.use('/tmf-api/productUsageManagement/v5/productUsage', bbUsageRequestRoutes);
 
 
 app.use("/tmf-api/usageManagement/v4/usage", bbUsageRequestRoutes);

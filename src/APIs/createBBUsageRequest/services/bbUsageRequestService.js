@@ -1,28 +1,27 @@
-const Usage = require("../../../models/TMF635_UsageManagement");
+const ProductUsage = require('../../../models/TMF635_UsageManagement');
 
-const createBBUsageRequest = async (payload) => {
-  const { subscriberID, accountNo, serviceNo, usageCharacteristic } = payload;
+async function createBBUsageRequest(payload) {
+  const { subscriberId, usageType, characteristics = [] } = payload;
 
-  if (!subscriberID) {
-    const err = new Error("subscriberID is required");
-    err.statusCode = 400;
-    throw err;
-  }
+  const usageCharacteristic = characteristics.map((c) => ({
+    name: c.name,
+    value: c.value,
+  }));
 
-  const characteristics = Array.isArray(usageCharacteristic)
-    ? [...usageCharacteristic]
-    : [];
-
-  if (accountNo) characteristics.push({ name: "accountNo", value: accountNo });
-  if (serviceNo) characteristics.push({ name: "serviceNo", value: serviceNo });
-
-  await Usage.create({
-    relatedParty: [{ id: subscriberID, role: "Subscriber" }],
-    usageCharacteristic: characteristics
+  const doc = await ProductUsage.create({
+    usageType,
+    status: 'received',
+    usageCharacteristic,
+    externalIdentifier: [
+      {
+        owner: 'SLT-OMNI',
+        externalIdentifierType: 'subscriberId',
+        id: subscriberId,
+      },
+    ],
   });
 
-  // Nothing else to return — the documented response only confirms success
-  return true;
-};
+  return doc;
+}
 
 module.exports = { createBBUsageRequest };

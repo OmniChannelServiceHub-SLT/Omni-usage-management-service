@@ -5,15 +5,16 @@ dns.setServers(['8.8.8.8', '1.1.1.1']);
 const app = require("./src/app");
 const connectDB = require("./src/config/db");
 
-const PORT = process.env.PORT || 4001;
+const app = require('./src/app');
+const connectDB = require('./src/config/db');
 
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Usage Management Service running on http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("Failed to start service:", err.message);
-    process.exit(1);
+const PORT = process.env.PORT || 3008;
+
+async function start() {
+  await connectDB();
+  app.listen(PORT, () => {
+    console.log(`[SERVER] Usage Management Service running on port ${PORT}`);
   });
+}
+
+start();
