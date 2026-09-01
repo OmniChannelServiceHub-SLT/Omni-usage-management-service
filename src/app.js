@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 
-const requestLogger = require('./src/middleware/requestLogger');
-const errorHandler = require('./src/middleware/errorHandler');
-const bbUsageRequestRoutes = require('./src/APIs/createBBUsageRequest/routes/bbUsageRequestRoutes');
+const requestLogger = require('./middleware/requestLogger');
+const errorHandler = require('./middleware/errorHandler');
+const bbUsageRequestRoutes = require('./APIs/createBBUsageRequest/routes/bbUsageRequestRoutes');
 
 const app = express();
 
