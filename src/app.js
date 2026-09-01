@@ -1,17 +1,20 @@
-const express = require("express");
+const express = require('express');
+const cors = require('cors');
 
 
 
 const bbUsageRequestRoutes = require("./APIs/createBBUsageRequest/routes/bbUsageRequestRoutes");
 const usageSummaryRoutes = require("./APIs/createUsageSummary/routes/usageSummaryRoutes");
 
+
 const app = express();
 
+app.use(cors());
 app.use(express.json());
+app.use(requestLogger);
 
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "UP", service: "usage-management-service" });
-});
+app.use('/tmf-api/productUsageManagement/v5/productUsage', bbUsageRequestRoutes);
+
 
 app.use("/tmf-api/usageManagement/v4/usage", bbUsageRequestRoutes);
 app.use("/tmf-api/usageManagement/v4/usagesummary", usageSummaryRoutes);
