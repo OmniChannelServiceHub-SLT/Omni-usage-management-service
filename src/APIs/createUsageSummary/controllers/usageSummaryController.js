@@ -1,31 +1,23 @@
-const { getUsageSummary } = require("../services/usageSummaryService");
+const { getUsageSummary } = require('../services/usageSummaryService');
 
+async function getUsageSummaryHandler(req, res, next) {
+  const { subscriberId } = req.query;
 
-const createUsageSummaryHandler = async (req, res) => {
-  try {
-    const { subscriberID } = req.query;
-    const dataBundle = await getUsageSummary(subscriberID);
-
-    return res.status(200).json({
-      isSuccess: true,
-      errorMessege: null,
-      exceptionDetail: null,
-      dataBundle,
-      errorShow: null,
-      errorCode: null
-    });
-  } catch (error) {
-    const statusCode = error.statusCode || 500;
-
-    return res.status(statusCode).json({
-      isSuccess: false,
-      errorMessege: statusCode === 500 ? "Internal Server Error" : error.message,
-      exceptionDetail: statusCode === 500 ? error.message : null,
-      dataBundle: null,
-      errorShow: true,
-      errorCode: statusCode
+  if (!subscriberId) {
+    return res.status(400).json({
+      error: {
+        code: 'INVALID_REQUEST',
+        reason: 'subscriberId query parameter is required',
+      },
     });
   }
-};
 
-module.exports = { createUsageSummaryHandler };
+  try {
+    const records = await getUsageSummary(subscriberId);
+    res.status(200).json(records.map((r) => r.toJSON()));
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { getUsageSummaryHandler };

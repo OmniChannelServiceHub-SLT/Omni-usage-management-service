@@ -1,8 +1,9 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const { createUsageSummaryHandler } = require("../controllers/usageSummaryController");
 
+const { getUsageSummaryHandler } = require('../controllers/usageSummaryController');
+const { authenticate } = require('../../../middleware/authMiddleware');
 
-router.get("/", createUsageSummaryHandler);
+router.get('/', authenticate, getUsageSummaryHandler);
 
 module.exports = router;
