@@ -5,6 +5,7 @@ const requestLogger = require('./middleware/requestLogger');
 const errorHandler = require('./middleware/errorHandler');
 
 const bbUsageRequestRoutes = require('./APIs/createBBUsageRequest/routes/bbUsageRequestRoutes');
+const usageSummaryRoutes = require('./APIs/createUsageSummary/routes/usageSummaryRoutes');
 
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(requestLogger);
 
 app.use('/tmf-api/usageManagement/v4/usage', bbUsageRequestRoutes);
+app.use('/tmf-api/usageManagement/v4/usageSummary', usageSummaryRoutes);
 
 
 app.use(errorHandler);
