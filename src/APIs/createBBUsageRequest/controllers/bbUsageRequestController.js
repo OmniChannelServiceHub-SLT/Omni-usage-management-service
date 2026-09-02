@@ -1,22 +1,26 @@
 const { createBBUsageRequest } = require('../services/bbUsageRequestService');
 
-function validateCreateBBUsageRequest(body) {
-  const { subscriberId, usageType } = body;
+function validateBBUsageRequest(body) {
   const errors = [];
+  const { usageDate, usageType, usageSpecification } = body;
 
-  if (!subscriberId || typeof subscriberId !== 'string') {
-    errors.push('subscriberId is required and must be a string');
+  if (!usageDate) {
+    errors.push('usageDate is required');
   }
 
   if (!usageType || typeof usageType !== 'string') {
     errors.push('usageType is required and must be a string');
   }
 
+  if (!usageSpecification || !usageSpecification.id) {
+    errors.push('usageSpecification.id is required');
+  }
+
   return errors;
 }
 
 async function createBBUsageRequestHandler(req, res, next) {
-  const errors = validateCreateBBUsageRequest(req.body);
+  const errors = validateBBUsageRequest(req.body);
 
   if (errors.length > 0) {
     return res.status(400).json({

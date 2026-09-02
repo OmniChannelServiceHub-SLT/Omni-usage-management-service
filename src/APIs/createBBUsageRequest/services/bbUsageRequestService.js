@@ -1,24 +1,19 @@
-const ProductUsage = require('../../../models/TMF635_UsageManagement');
+const Usage = require('../../../models/TMF635_UsageManagement');
 
 async function createBBUsageRequest(payload) {
-  const { subscriberId, usageType, characteristics = [] } = payload;
+  const { usageDate, usageType, usageSpecification, subscriberId, usageCharacteristic = [] } = payload;
 
-  const usageCharacteristic = characteristics.map((c) => ({
-    name: c.name,
-    value: c.value,
-  }));
+  const relatedParty = subscriberId
+    ? [{ '@referredType': 'Subscriber', id: subscriberId }]
+    : [];
 
-  const doc = await ProductUsage.create({
+  const doc = await Usage.create({
+    usageDate,
     usageType,
-    status: 'received',
+    usageSpecification,
+    relatedParty,
     usageCharacteristic,
-    externalIdentifier: [
-      {
-        owner: 'SLT-OMNI',
-        externalIdentifierType: 'subscriberId',
-        id: subscriberId,
-      },
-    ],
+    status: 'recorded',
   });
 
   return doc;
