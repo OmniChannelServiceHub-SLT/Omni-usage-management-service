@@ -8,6 +8,7 @@ const bbUsageRequestRoutes = require('./APIs/createBBUsageRequest/routes/bbUsage
 const usageSummaryRoutes = require('./APIs/createUsageSummary/routes/usageSummaryRoutes');
 const extraGBRoutes = require('./APIs/createExtraGB/routes/extraGBRoutes');
 const weeksUsageRoutes = require('./APIs/createWeeksUsage/routes/weeksUsageRoutes');
+const bonusDataRoutes = require('./APIs/createBonusData/routes/bonusDataRoutes');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/tmf-api/usageManagement/v4/usage', bbUsageRequestRoutes);
 app.use('/tmf-api/usageManagement/v4/usageSummary', usageSummaryRoutes);
 app.use('/tmf-api/usageManagement/v4/extraGB', extraGBRoutes);
 app.use('/tmf-api/usageManagement/v4/weeksUsage', weeksUsageRoutes);
+app.use('/tmf-api/usageManagement/v4/bonusData', bonusDataRoutes);
 
 app.use(errorHandler);
 
