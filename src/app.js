@@ -6,7 +6,7 @@ const errorHandler = require('./middleware/errorHandler');
 
 const bbUsageRequestRoutes = require('./APIs/createBBUsageRequest/routes/bbUsageRequestRoutes');
 const usageSummaryRoutes = require('./APIs/createUsageSummary/routes/usageSummaryRoutes');
-
+const extraGBRoutes = require('./APIs/createExtraGB/routes/extraGBRoutes');
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(requestLogger);
 
 app.use('/tmf-api/usageManagement/v4/usage', bbUsageRequestRoutes);
 app.use('/tmf-api/usageManagement/v4/usageSummary', usageSummaryRoutes);
-
+app.use('/tmf-api/usageManagement/v4/extraGB', extraGBRoutes);
 
 app.use(errorHandler);
 
