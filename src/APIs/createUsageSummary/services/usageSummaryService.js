@@ -1,9 +1,9 @@
-const ProductUsage = require('../../../models/TMF635_UsageManagement');
+const Usage = require('../../../models/TMF635_UsageManagement');
 
 async function getUsageSummary(subscriberId) {
-  const records = await ProductUsage.find({
-    'externalIdentifier.id': subscriberId,
-    'externalIdentifier.externalIdentifierType': 'subscriberId',
+  const records = await Usage.find({
+    'relatedParty.id': subscriberId,
+    'relatedParty.@referredType': 'Subscriber',
   }).sort({ createdAt: -1 });
 
   return records;
