@@ -9,7 +9,7 @@ const UsageSpecificationRefSchema = new Schema({
 }, { _id: false });
 
 const RelatedPartySchema = new Schema({
-  '@referredType': { type: String, required: true }, // e.g. "Subscriber"
+  '@referredType': { type: String, required: true },
   id: { type: String, required: true },
   role: { type: String },
 }, { _id: false });
@@ -21,12 +21,16 @@ const UsageCharacteristicSchema = new Schema({
 
 const UsageSchema = new Schema({
   '@type': { type: String, default: 'Usage' },
-  usageDate: { type: Date, required: true },   // mandatory per TMF635B v4.0.0 conformance profile
-  usageType: { type: String, required: true }, // mandatory per TMF635B v4.0.0 conformance profile
-  usageSpecification: { type: UsageSpecificationRefSchema, required: true }, // usageSpecification.id is mandatory
-  relatedParty: [RelatedPartySchema],           // optional array; used here to carry subscriberId
+  usageDate: { type: Date, required: true },
+  usageType: { type: String, required: true },
+  usageSpecification: { type: UsageSpecificationRefSchema, required: true },
+  relatedParty: [RelatedPartySchema],
   usageCharacteristic: [UsageCharacteristicSchema],
   status: { type: String, default: 'recorded' },
+
+  // Raw legacy/Excel-shaped response data, kept 1:1 alongside TMF fields.
+  // Populated on create, returned as-is by each API's legacy mapper.
+  legacyData: { type: Schema.Types.Mixed },
 }, {
   timestamps: true,
   toJSON: { virtuals: true },

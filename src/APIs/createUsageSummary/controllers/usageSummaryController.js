@@ -1,4 +1,5 @@
 const { getUsageSummary } = require('../services/usageSummaryService');
+const { toLegacyResponse, toTmfResponse } = require('../mappers/usageSummaryMapper');
 
 async function getUsageSummaryHandler(req, res, next) {
   const { subscriberId } = req.query;
@@ -14,7 +15,12 @@ async function getUsageSummaryHandler(req, res, next) {
 
   try {
     const records = await getUsageSummary(subscriberId);
-    res.status(200).json(records.map((r) => r.toJSON()));
+
+    if (req.headers['x-response-format'] === 'legacy') {
+      return res.status(200).json(toLegacyResponse(records));
+    }
+
+    return res.status(200).json(toTmfResponse(records));
   } catch (err) {
     next(err);
   }
