@@ -1,4 +1,5 @@
 const { getBonusData } = require('../services/bonusDataService');
+const { toLegacyResponse, toTmfResponse } = require('../mappers/bonusDataMapper');
 
 async function getBonusDataHandler(req, res, next) {
   const { subscriberId } = req.query;
@@ -14,7 +15,12 @@ async function getBonusDataHandler(req, res, next) {
 
   try {
     const records = await getBonusData(subscriberId);
-    res.status(200).json(records.map((r) => r.toJSON()));
+
+    if (req.headers['x-response-format'] === 'legacy') {
+      return res.status(200).json(toLegacyResponse(records));
+    }
+
+    return res.status(200).json(toTmfResponse(records));
   } catch (err) {
     next(err);
   }
