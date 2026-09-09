@@ -1,7 +1,14 @@
 const Usage = require('../../../models/TMF635_UsageManagement');
 
 async function createBBUsageRequest(payload) {
-  const { usageDate, usageType, usageSpecification, subscriberId, usageCharacteristic = [] } = payload;
+  const {
+    usageDate,
+    usageType,
+    usageSpecification,
+    subscriberId,
+    usageCharacteristic = [],
+    legacyData,
+  } = payload;
 
   const relatedParty = subscriberId
     ? [{ '@referredType': 'Subscriber', id: subscriberId }]
@@ -14,6 +21,7 @@ async function createBBUsageRequest(payload) {
     relatedParty,
     usageCharacteristic,
     status: 'recorded',
+    legacyData,
   });
 
   return doc;

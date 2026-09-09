@@ -1,4 +1,5 @@
 const { createBBUsageRequest } = require('../services/bbUsageRequestService');
+const { toLegacyResponse, toTmfResponse } = require('../mappers/bbUsageRequestMapper');
 
 function validateBBUsageRequest(body) {
   const errors = [];
@@ -34,7 +35,14 @@ async function createBBUsageRequestHandler(req, res, next) {
 
   try {
     const result = await createBBUsageRequest(req.body);
-    res.status(201).json(result.toJSON());
+
+    if (req.headers['x-response-format'] === 'legacy') {
+      return res.status(200).json(toLegacyResponse(result));
+    }
+
+    const tmfBody = toTmfResponse(result);
+    res.set('Location', tmfBody.href);
+    return res.status(201).json(tmfBody);
   } catch (err) {
     next(err);
   }
