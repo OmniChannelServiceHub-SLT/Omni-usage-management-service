@@ -1,4 +1,5 @@
 const { getWeeksUsage } = require('../services/weeksUsageService');
+const { toLegacyResponse, toTmfResponse } = require('../mappers/weeksUsageMapper');
 
 async function getWeeksUsageHandler(req, res, next) {
   const { subscriberId } = req.query;
@@ -14,7 +15,12 @@ async function getWeeksUsageHandler(req, res, next) {
 
   try {
     const records = await getWeeksUsage(subscriberId);
-    res.status(200).json(records.map((r) => r.toJSON()));
+
+    if (req.headers['x-response-format'] === 'legacy') {
+      return res.status(200).json(toLegacyResponse(records));
+    }
+
+    return res.status(200).json(toTmfResponse(records));
   } catch (err) {
     next(err);
   }
