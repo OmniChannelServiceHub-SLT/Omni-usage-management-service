@@ -1,4 +1,5 @@
 const { getExtraGBUsage } = require('../services/extraGBService');
+const { toLegacyResponse, toTmfResponse } = require('../mappers/extraGBMapper');
 
 async function getExtraGBHandler(req, res, next) {
   const { subscriberId } = req.query;
@@ -14,7 +15,12 @@ async function getExtraGBHandler(req, res, next) {
 
   try {
     const records = await getExtraGBUsage(subscriberId);
-    res.status(200).json(records.map((r) => r.toJSON()));
+
+    if (req.headers['x-response-format'] === 'legacy') {
+      return res.status(200).json(toLegacyResponse(records));
+    }
+
+    return res.status(200).json(toTmfResponse(records));
   } catch (err) {
     next(err);
   }
