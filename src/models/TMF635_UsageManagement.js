@@ -29,7 +29,7 @@ const UsageSchema = new Schema({
   status: { type: String, default: 'recorded' },
 
   // Raw legacy/Excel-shaped response data, kept 1:1 alongside TMF fields.
-  // Populated on create, returned as-is by the legacy mapper.
+  // Populated on create, returned as-is by each API's legacy mapper.
   legacyData: { type: Schema.Types.Mixed },
 }, {
   timestamps: true,
