@@ -11,6 +11,7 @@ const weeksUsageRoutes = require('./APIs/createWeeksUsage/routes/weeksUsageRoute
 const bonusDataRoutes = require('./APIs/createBonusData/routes/bonusDataRoutes');
 const freeDataRoutes = require('./APIs/createFreeData/routes/freeDataRoutes');
 const currentMonthsDailyUsageRoutes = require('./APIs/createCurrentMonthsDailyUsage/routes/currentMonthsDailyUsageRoutes');
+const enhancedCurrentDailyUsageRoutes = require('./APIs/createEnhancedCurrentDailyUsage/routes/enhancedCurrentDailyUsageRoutes');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use('/tmf-api/usageManagement/v4/weeksUsage', weeksUsageRoutes);
 app.use('/tmf-api/usageManagement/v4/bonusData', bonusDataRoutes);
 app.use('/tmf-api/usageManagement/v4/freeData', freeDataRoutes);
 app.use('/tmf-api/usageManagement/v4/currentMonthsDailyUsage', currentMonthsDailyUsageRoutes);
+app.use('/tmf-api/usageManagement/v4/enhancedCurrentDailyUsage', enhancedCurrentDailyUsageRoutes);
 
 app.use(errorHandler);
 
