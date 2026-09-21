@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 // TMF635 v4.0.0 — Usage resource
-// Shared model 
 const UsageSpecificationRefSchema = new Schema({
   id: { type: String, required: true },
   href: { type: String },
@@ -27,9 +26,6 @@ const UsageSchema = new Schema({
   relatedParty: [RelatedPartySchema],
   usageCharacteristic: [UsageCharacteristicSchema],
   status: { type: String, default: 'recorded' },
-
-  // Raw legacy/Excel-shaped response data, kept 1:1 alongside TMF fields.
-  // Populated on create, returned as-is by each API's legacy mapper.
   legacyData: { type: Schema.Types.Mixed },
 }, {
   timestamps: true,
@@ -44,4 +40,36 @@ UsageSchema.virtual('href').get(function () {
   return `/tmf-api/usageManagement/v4/usage/${this._id.toHexString()}`;
 });
 
-module.exports = mongoose.model('Usage', UsageSchema);
+// TMF635 v4.0.0 — UsageSpecification resource (sibling resource, same spec)
+const UsageSpecCharacteristicSchema = new Schema({
+  name: { type: String, required: true },
+  value: { type: Schema.Types.Mixed, required: true },
+}, { _id: false });
+
+const UsageSpecificationSchema = new Schema({
+  '@type': { type: String, default: 'UsageSpecification' },
+  name: { type: String, required: true }, // mandatory per conformance profile
+  usageSpecCharacteristic: [UsageSpecCharacteristicSchema],
+
+  // Raw legacy/Excel-shaped response data, kept 1:1 alongside TMF fields.
+  legacyData: { type: Schema.Types.Mixed },
+}, {
+  timestamps: true,
+  toJSON: { virtuals: true },
+});
+
+UsageSpecificationSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+UsageSpecificationSchema.virtual('href').get(function () {
+  return `/tmf-api/usageManagement/v4/usageSpecification/${this._id.toHexString()}`;
+});
+
+const Usage = mongoose.model('Usage', UsageSchema);
+const UsageSpecification = mongoose.model('UsageSpecification', UsageSpecificationSchema);
+
+// Default export stays `Usage` — every existing require('.../TMF635_UsageManagement')
+// keeps working unchanged. New code can also pull UsageSpecification off the same export.
+module.exports = Usage;
+module.exports.UsageSpecification = UsageSpecification;
