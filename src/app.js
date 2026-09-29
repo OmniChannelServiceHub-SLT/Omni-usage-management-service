@@ -6,6 +6,7 @@ const errorHandler = require('./middleware/errorHandler');
 
 const bbUsageRequestRoutes = require('./APIs/createBBUsageRequest/routes/bbUsageRequestRoutes');
 const usageSummaryRoutes = require('./APIs/createUsageSummary/routes/usageSummaryRoutes');
+const usageSummaryV2Routes = require('./APIs/createUsageSummaryV2/routes/usageSummaryV2Routes');
 const extraGBRoutes = require('./APIs/createExtraGB/routes/extraGBRoutes');
 const weeksUsageRoutes = require('./APIs/createWeeksUsage/routes/weeksUsageRoutes');
 const bonusDataRoutes = require('./APIs/createBonusData/routes/bonusDataRoutes');
@@ -26,6 +27,7 @@ app.use(requestLogger);
 
 app.use('/tmf-api/usageManagement/v4/usage', bbUsageRequestRoutes);
 app.use('/tmf-api/usageManagement/v4/usageSummary', usageSummaryRoutes);
+app.use('/tmf-api/usageManagement/v4/usageSummaryV2', usageSummaryV2Routes);
 app.use('/tmf-api/usageManagement/v4/extraGB', extraGBRoutes);
 app.use('/tmf-api/usageManagement/v4/weeksUsage', weeksUsageRoutes);
 app.use('/tmf-api/usageManagement/v4/bonusData', bonusDataRoutes);
