@@ -17,6 +17,7 @@ const previousMonthDailyUsageRoutes = require('./APIs/createPrevoiusMonthDailyUs
 const enhancedPreviousDailyUsageRoutes = require('./APIs/createEnhancedPreviousDailyUsage/routes/enhancedPreviousDailyUsageRoutes');
 const usageSpecificationRoutes = require('./APIs/createUsageSpecification/routes/usageSpecificationRoutes');
 const extraGBPackagesRoutes = require('./APIs/listExtraGBPackages/routes/extraGBPackagesRoutes');
+const extraGBPackagesMobileRoutes = require('./APIs/listExtraGBPackagesMobile/routes/extraGBPackagesMobileRoutes');
 const reportTimePeriodRoutes = require('./APIs/listReportTimePeriod/routes/reportTimePeriodRoutes');
 
 const app = express();
@@ -38,6 +39,7 @@ app.use('/tmf-api/usageManagement/v4/previousMonthDailyUsage', previousMonthDail
 app.use('/tmf-api/usageManagement/v4/enhancedPreviousDailyUsage', enhancedPreviousDailyUsageRoutes);
 app.use('/tmf-api/usageManagement/v4/usageSpecification', usageSpecificationRoutes);
 app.use('/tmf-api/usageManagement/v4/extraGBPackages', extraGBPackagesRoutes);
+app.use('/tmf-api/usageManagement/v4/extraGBPackagesMobile', extraGBPackagesMobileRoutes);
 app.use('/tmf-api/usageManagement/v4/reportTimePeriod', reportTimePeriodRoutes);
 
 app.use(errorHandler);
