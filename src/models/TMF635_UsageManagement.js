@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-// TMF635 v4.0.0 — Usage resource
+// TMF635 v4.0.0 - Usage + UsageSpecification
+// Each MySLT API is represented by one UsageSpecification 
+// Each subscriber's data is a Usage record that references that specification
+// and carries the stored MySLT response in `mysltResponse`.
+
 const UsageSpecificationRefSchema = new Schema({
   id: { type: String, required: true },
   href: { type: String },
+  name: { type: String },
 }, { _id: false });
 
 const RelatedPartySchema = new Schema({
@@ -13,7 +18,7 @@ const RelatedPartySchema = new Schema({
   role: { type: String },
 }, { _id: false });
 
-const UsageCharacteristicSchema = new Schema({
+const CharacteristicSchema = new Schema({
   name: { type: String, required: true },
   value: { type: Schema.Types.Mixed, required: true },
 }, { _id: false });
@@ -22,11 +27,13 @@ const UsageSchema = new Schema({
   '@type': { type: String, default: 'Usage' },
   usageDate: { type: Date, required: true },
   usageType: { type: String, required: true },
+  status: { type: String, default: 'recorded' },
   usageSpecification: { type: UsageSpecificationRefSchema, required: true },
   relatedParty: [RelatedPartySchema],
-  usageCharacteristic: [UsageCharacteristicSchema],
-  status: { type: String, default: 'recorded' },
-  legacyData: { type: Schema.Types.Mixed },
+  usageCharacteristic: [CharacteristicSchema],
+
+  // Stored MySLT response, returned unchanged by the API
+  mysltResponse: { type: Schema.Types.Mixed },
 }, {
   timestamps: true,
   toJSON: { virtuals: true },
@@ -40,19 +47,11 @@ UsageSchema.virtual('href').get(function () {
   return `/tmf-api/usageManagement/v4/usage/${this._id.toHexString()}`;
 });
 
-// TMF635 v4.0.0 — UsageSpecification resource (sibling resource, same spec)
-const UsageSpecCharacteristicSchema = new Schema({
-  name: { type: String, required: true },
-  value: { type: Schema.Types.Mixed, required: true },
-}, { _id: false });
-
 const UsageSpecificationSchema = new Schema({
   '@type': { type: String, default: 'UsageSpecification' },
-  name: { type: String, required: true }, // mandatory per conformance profile
-  usageSpecCharacteristic: [UsageSpecCharacteristicSchema],
-
-  // Raw legacy/Excel-shaped response data, kept 1:1 alongside TMF fields.
-  legacyData: { type: Schema.Types.Mixed },
+  name: { type: String, required: true },
+  description: { type: String },
+  usageSpecCharacteristic: [CharacteristicSchema],
 }, {
   timestamps: true,
   toJSON: { virtuals: true },
@@ -69,7 +68,4 @@ UsageSpecificationSchema.virtual('href').get(function () {
 const Usage = mongoose.model('Usage', UsageSchema);
 const UsageSpecification = mongoose.model('UsageSpecification', UsageSpecificationSchema);
 
-// Default export stays `Usage` — every existing require('.../TMF635_UsageManagement')
-// keeps working unchanged. New code can also pull UsageSpecification off the same export.
-module.exports = Usage;
-module.exports.UsageSpecification = UsageSpecification;
+module.exports = { Usage, UsageSpecification };
