@@ -10,6 +10,7 @@ const getCurrMonthDailyRoutes = require('./APIs/getCurrMonthDaily/routes/getCurr
 const getPrevMonthDailyRoutes = require('./APIs/getPrevMonthDaily/routes/getPrevMonthDailyRoutes');
 const listOfferingExtraGbRoutes = require('./APIs/listOfferingExtraGb/routes/listOfferingExtraGbRoutes');
 const getWeeksUsageRoutes = require('./APIs/getWeeksUsage/routes/getWeeksUsageRoutes');
+const listUsageReportRoutes = require('./APIs/listUsageReport/routes/listUsageReportRoutes');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/tmf-api/usageManagement/v4/getCurrMonthDaily', getCurrMonthDailyRoutes
 app.use('/tmf-api/usageManagement/v4/getPrevMonthDaily', getPrevMonthDailyRoutes);
 app.use('/tmf-api/usageManagement/v4/listOfferingExtraGb', listOfferingExtraGbRoutes);
 app.use('/tmf-api/usageManagement/v4/getWeeksUsage', getWeeksUsageRoutes);
+app.use('/tmf-api/usageManagement/v4/listUsageReport', listUsageReportRoutes);
 
 app.use(errorHandler);
 
