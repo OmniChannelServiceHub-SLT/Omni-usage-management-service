@@ -5,6 +5,7 @@ const requestLogger = require('./middleware/requestLogger');
 const errorHandler = require('./middleware/errorHandler');
 
 const getUsageSummaryRoutes = require('./APIs/getUsageSummary/routes/getUsageSummaryRoutes');
+const getExtraGbRoutes = require('./APIs/getExtraGb/routes/getExtraGbRoutes');
 const getBonusDataRoutes = require('./APIs/getBonusData/routes/getBonusDataRoutes');
 const getFreeDataRoutes = require('./APIs/getFreeData/routes/getFreeDataRoutes');
 const getCurrMonthDailyRoutes = require('./APIs/getCurrMonthDaily/routes/getCurrMonthDailyRoutes');
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(requestLogger);
 
 app.use('/tmf-api/usageManagement/v4/getUsageSummary', getUsageSummaryRoutes);
+app.use('/tmf-api/usageManagement/v4/getExtraGb', getExtraGbRoutes);
 app.use('/tmf-api/usageManagement/v4/getBonusData', getBonusDataRoutes);
 app.use('/tmf-api/usageManagement/v4/getFreeData', getFreeDataRoutes);
 app.use('/tmf-api/usageManagement/v4/getCurrMonthDaily', getCurrMonthDailyRoutes);
