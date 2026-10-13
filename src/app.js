@@ -7,6 +7,7 @@ const errorHandler = require('./middleware/errorHandler');
 const getBonusDataRoutes = require('./APIs/getBonusData/routes/getBonusDataRoutes');
 const getFreeDataRoutes = require('./APIs/getFreeData/routes/getFreeDataRoutes');
 const getCurrMonthDailyRoutes = require('./APIs/getCurrMonthDaily/routes/getCurrMonthDailyRoutes');
+const getPrevMonthDailyRoutes = require('./APIs/getPrevMonthDaily/routes/getPrevMonthDailyRoutes');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(requestLogger);
 app.use('/tmf-api/usageManagement/v4/getBonusData', getBonusDataRoutes);
 app.use('/tmf-api/usageManagement/v4/getFreeData', getFreeDataRoutes);
 app.use('/tmf-api/usageManagement/v4/getCurrMonthDaily', getCurrMonthDailyRoutes);
+app.use('/tmf-api/usageManagement/v4/getPrevMonthDaily', getPrevMonthDailyRoutes);
 
 app.use(errorHandler);
 
