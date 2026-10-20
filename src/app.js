@@ -13,6 +13,7 @@ const getPrevMonthDailyRoutes = require('./APIs/getPrevMonthDaily/routes/getPrev
 const listOfferingExtraGbRoutes = require('./APIs/listOfferingExtraGb/routes/listOfferingExtraGbRoutes');
 const getWeeksUsageRoutes = require('./APIs/getWeeksUsage/routes/getWeeksUsageRoutes');
 const retrieveProtocolRoutes = require('./APIs/retrieveProtocol/routes/retrieveProtocolRoutes');
+const getLTEFreeunitDetailRoutes = require('./APIs/getLTEFreeunitDetail/routes/getLTEFreeunitDetailRoutes');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/tmf-api/usageManagement/v4/getPrevMonthDaily', getPrevMonthDailyRoutes
 app.use('/tmf-api/usageManagement/v4/listOfferingExtraGb', listOfferingExtraGbRoutes);
 app.use('/tmf-api/usageManagement/v4/getWeeksUsage', getWeeksUsageRoutes);
 app.use('/tmf-api/usageManagement/v4/retrieveProtocol', retrieveProtocolRoutes);
+app.use('/tmf-api/usageManagement/v4/getLTEFreeunitDetail', getLTEFreeunitDetailRoutes);
 
 app.use(errorHandler);
 
