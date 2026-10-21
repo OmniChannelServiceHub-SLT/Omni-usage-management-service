@@ -5,15 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js",
-    "seed:usagesummary": "node src/seed/seedUsageSummary.js",
-    "seed:extragb": "node src/seed/seedExtraGb.js",
-    "seed:bonusdata": "node src/seed/seedBonusData.js",
-    "seed:freedata": "node src/seed/seedFreeData.js",
-    "seed:currmonthdaily": "node src/seed/seedCurrMonthDaily.js",
-    "seed:prevmonthdaily": "node src/seed/seedPrevMonthDaily.js",
-    "seed:offeringextragb": "node src/seed/seedOfferingExtraGb.js",
-    "seed:weeksusage": "node src/seed/seedWeeksUsage.js"
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "cors": "^2.8.6",
