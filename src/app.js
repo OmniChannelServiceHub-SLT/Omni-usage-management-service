@@ -4,21 +4,17 @@ const cors = require('cors');
 const requestLogger = require('./middleware/requestLogger');
 const errorHandler = require('./middleware/errorHandler');
 
-const bbUsageRequestRoutes = require('./APIs/createBBUsageRequest/routes/bbUsageRequestRoutes');
-const usageSummaryRoutes = require('./APIs/createUsageSummary/routes/usageSummaryRoutes');
-const usageSummaryV2Routes = require('./APIs/createUsageSummaryV2/routes/usageSummaryV2Routes');
-const extraGBRoutes = require('./APIs/createExtraGB/routes/extraGBRoutes');
-const weeksUsageRoutes = require('./APIs/createWeeksUsage/routes/weeksUsageRoutes');
-const bonusDataRoutes = require('./APIs/createBonusData/routes/bonusDataRoutes');
-const freeDataRoutes = require('./APIs/createFreeData/routes/freeDataRoutes');
-const currentMonthsDailyUsageRoutes = require('./APIs/createCurrentMonthsDailyUsage/routes/currentMonthsDailyUsageRoutes');
-const enhancedCurrentDailyUsageRoutes = require('./APIs/createEnhancedCurrentDailyUsage/routes/enhancedCurrentDailyUsageRoutes');
-const previousMonthDailyUsageRoutes = require('./APIs/createPrevoiusMonthDailyUsage/routes/previousMonthDailyUsageRoutes');
-const enhancedPreviousDailyUsageRoutes = require('./APIs/createEnhancedPreviousDailyUsage/routes/enhancedPreviousDailyUsageRoutes');
-const usageSpecificationRoutes = require('./APIs/createUsageSpecification/routes/usageSpecificationRoutes');
-const extraGBPackagesRoutes = require('./APIs/listExtraGBPackages/routes/extraGBPackagesRoutes');
-const extraGBPackagesMobileRoutes = require('./APIs/listExtraGBPackagesMobile/routes/extraGBPackagesMobileRoutes');
-const reportTimePeriodRoutes = require('./APIs/listReportTimePeriod/routes/reportTimePeriodRoutes');
+const getUsageSummaryRoutes = require('./APIs/getUsageSummary/routes/getUsageSummaryRoutes');
+const getExtraGbRoutes = require('./APIs/getExtraGb/routes/getExtraGbRoutes');
+const getBonusDataRoutes = require('./APIs/getBonusData/routes/getBonusDataRoutes');
+const getFreeDataRoutes = require('./APIs/getFreeData/routes/getFreeDataRoutes');
+const getCurrMonthDailyRoutes = require('./APIs/getCurrMonthDaily/routes/getCurrMonthDailyRoutes');
+const getPrevMonthDailyRoutes = require('./APIs/getPrevMonthDaily/routes/getPrevMonthDailyRoutes');
+const listOfferingExtraGbRoutes = require('./APIs/listOfferingExtraGb/routes/listOfferingExtraGbRoutes');
+const getWeeksUsageRoutes = require('./APIs/getWeeksUsage/routes/getWeeksUsageRoutes');
+const retrieveProtocolRoutes = require('./APIs/retrieveProtocol/routes/retrieveProtocolRoutes');
+const getCurrentDailyUsageRoutes = require('./APIs/getCurrentDailyUsage/routes/getCurrentDailyUsageRoutes');
+const getPrevDailyUsageRoutes = require('./APIs/getPrevDailyUsage/routes/getPrevDailyUsageRoutes');
 
 const app = express();
 
@@ -26,21 +22,17 @@ app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
 
-app.use('/tmf-api/usageManagement/v4/usage', bbUsageRequestRoutes);
-app.use('/tmf-api/usageManagement/v4/usageSummary', usageSummaryRoutes);
-app.use('/tmf-api/usageManagement/v4/usageSummaryV2', usageSummaryV2Routes);
-app.use('/tmf-api/usageManagement/v4/extraGB', extraGBRoutes);
-app.use('/tmf-api/usageManagement/v4/weeksUsage', weeksUsageRoutes);
-app.use('/tmf-api/usageManagement/v4/bonusData', bonusDataRoutes);
-app.use('/tmf-api/usageManagement/v4/freeData', freeDataRoutes);
-app.use('/tmf-api/usageManagement/v4/currentMonthsDailyUsage', currentMonthsDailyUsageRoutes);
-app.use('/tmf-api/usageManagement/v4/enhancedCurrentDailyUsage', enhancedCurrentDailyUsageRoutes);
-app.use('/tmf-api/usageManagement/v4/previousMonthDailyUsage', previousMonthDailyUsageRoutes);
-app.use('/tmf-api/usageManagement/v4/enhancedPreviousDailyUsage', enhancedPreviousDailyUsageRoutes);
-app.use('/tmf-api/usageManagement/v4/usageSpecification', usageSpecificationRoutes);
-app.use('/tmf-api/usageManagement/v4/extraGBPackages', extraGBPackagesRoutes);
-app.use('/tmf-api/usageManagement/v4/extraGBPackagesMobile', extraGBPackagesMobileRoutes);
-app.use('/tmf-api/usageManagement/v4/reportTimePeriod', reportTimePeriodRoutes);
+app.use('/tmf-api/usageManagement/v4/getUsageSummary', getUsageSummaryRoutes);
+app.use('/tmf-api/usageManagement/v4/getExtraGb', getExtraGbRoutes);
+app.use('/tmf-api/usageManagement/v4/getBonusData', getBonusDataRoutes);
+app.use('/tmf-api/usageManagement/v4/getFreeData', getFreeDataRoutes);
+app.use('/tmf-api/usageManagement/v4/getCurrMonthDaily', getCurrMonthDailyRoutes);
+app.use('/tmf-api/usageManagement/v4/getPrevMonthDaily', getPrevMonthDailyRoutes);
+app.use('/tmf-api/usageManagement/v4/listOfferingExtraGb', listOfferingExtraGbRoutes);
+app.use('/tmf-api/usageManagement/v4/getWeeksUsage', getWeeksUsageRoutes);
+app.use('/tmf-api/usageManagement/v4/retrieveProtocol', retrieveProtocolRoutes);
+app.use('/tmf-api/usageManagement/v4/getCurrentDailyUsage', getCurrentDailyUsageRoutes);
+app.use('/tmf-api/usageManagement/v4/getPrevDailyUsage', getPrevDailyUsageRoutes);
 
 app.use(errorHandler);
 
