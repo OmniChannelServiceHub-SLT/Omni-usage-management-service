@@ -16,6 +16,8 @@ const retrieveProtocolRoutes = require('./APIs/retrieveProtocol/routes/retrieveP
 const getCurrentDailyUsageRoutes = require('./APIs/getCurrentDailyUsage/routes/getCurrentDailyUsageRoutes');
 const getPrevDailyUsageRoutes = require('./APIs/getPrevDailyUsage/routes/getPrevDailyUsageRoutes');
 
+const { usageRouter, usageSpecificationRouter } = require('./APIs/tmf635/tmf635Routes');
+
 const app = express();
 
 app.use(cors());
@@ -34,6 +36,8 @@ app.use('/tmf-api/usageManagement/v4/retrieveProtocol', retrieveProtocolRoutes);
 app.use('/tmf-api/usageManagement/v4/getCurrentDailyUsage', getCurrentDailyUsageRoutes);
 app.use('/tmf-api/usageManagement/v4/getPrevDailyUsage', getPrevDailyUsageRoutes);
 
+app.use('/tmf-api/usageManagement/v4/usage', usageRouter);
+app.use('/tmf-api/usageManagement/v4/usageSpecification', usageSpecificationRouter);
 app.use(errorHandler);
 
 module.exports = app;
